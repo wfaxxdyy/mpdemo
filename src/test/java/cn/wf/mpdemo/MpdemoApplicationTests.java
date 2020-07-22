@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -26,12 +28,13 @@ class MpdemoApplicationTests {
         userList.forEach(System.out::println);
     }
     @Test
+    @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class,readOnly = true,timeout = 100)
     public void testInsert() {
         System.out.println(("----- testInsert method test ------"));
         User user = new User();
         user.setAge(11);
-        user.setEmail("wf3@163.com");
-        user.setName("wf3");
+        user.setEmail("wf4@163.com");
+        user.setName("wf4");
         int i = userMapper.insert(user);
         log.info(user.getId()+"");
     }
